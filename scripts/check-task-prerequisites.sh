@@ -1,6 +1,6 @@
 #!/bin/bash
-# Check that implementation plan exists and find optional design documents
-# Usage: ./check-task-prerequisites.sh [--json]
+# 実装計画が存在し、オプションの設計ドキュメントを見つける
+# 使用法: ./check-task-prerequisites.sh [--json]
 
 set -e
 

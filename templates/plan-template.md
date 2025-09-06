@@ -1,96 +1,96 @@
-# Implementation Plan: [FEATURE]
+# 実装計画: [FEATURE]
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**ブランチ**: `[###-feature-name]` | **日付**: [DATE] | **仕様**: [link]
+**入力**: `/specs/[###-feature-name]/spec.md` からの機能仕様
 
-## Execution Flow (/plan command scope)
+## 実行フロー (/plan コマンドスコープ)
 ```
-1. Load feature spec from Input path
-   → If not found: ERROR "No feature spec at {path}"
-2. Fill Technical Context (scan for NEEDS CLARIFICATION)
-   → Detect Project Type from context (web=frontend+backend, mobile=app+api)
-   → Set Structure Decision based on project type
-3. Evaluate Constitution Check section below
-   → If violations exist: Document in Complexity Tracking
-   → If no justification possible: ERROR "Simplify approach first"
-   → Update Progress Tracking: Initial Constitution Check
-4. Execute Phase 0 → research.md
-   → If NEEDS CLARIFICATION remain: ERROR "Resolve unknowns"
-5. Execute Phase 1 → contracts, data-model.md, quickstart.md, agent-specific template file (e.g., `CLAUDE.md` for Claude Code, `.github/copilot-instructions.md` for GitHub Copilot, or `GEMINI.md` for Gemini CLI).
-6. Re-evaluate Constitution Check section
-   → If new violations: Refactor design, return to Phase 1
-   → Update Progress Tracking: Post-Design Constitution Check
-7. Plan Phase 2 → Describe task generation approach (DO NOT create tasks.md)
-8. STOP - Ready for /tasks command
+1. 入力パスから機能仕様をロード
+   → 見つからない場合: ERROR " {path} に機能仕様なし"
+2. 技術的コンテキストを埋める (NEEDS CLARIFICATION をスキャン)
+   → コンテキストからプロジェクトタイプを検出 (web=frontend+backend, mobile=app+api)
+   → プロジェクトタイプに基づいて構造決定を設定
+3. 下記の憲法チェックセクションを評価
+   → 違反が存在する場合: 複雑さ追跡に文書化
+   → 正当化不可能の場合: ERROR "まずアプローチを簡素化"
+   → 進捗追跡を更新: 初期憲法チェック
+4. フェーズ 0 を実行 → research.md
+   → NEEDS CLARIFICATION が残っている場合: ERROR "不明点を解決"
+5. フェーズ 1 を実行 → contracts, data-model.md, quickstart.md, エージェント固有のテンプレートファイル (例: Claude Code の `CLAUDE.md`, GitHub Copilot の `.github/copilot-instructions.md`, Gemini CLI の `GEMINI.md`)
+6. 憲法チェックセクションを再評価
+   → 新しい違反がある場合: 設計をリファクタリング, フェーズ 1 に戻る
+   → 進捗追跡を更新: 設計後憲法チェック
+7. フェーズ 2 を計画 → タスク生成アプローチを記述 (tasks.md を作成しない)
+8. 停止 - /tasks コマンドの準備完了
 ```
 
-**IMPORTANT**: The /plan command STOPS at step 7. Phases 2-4 are executed by other commands:
-- Phase 2: /tasks command creates tasks.md
-- Phase 3-4: Implementation execution (manual or via tools)
+**重要**: /plan コマンドはステップ 7 で停止。フェーズ 2-4 は他のコマンドによって実行:
+- フェーズ 2: /tasks コマンドが tasks.md を作成
+- フェーズ 3-4: 実装実行 (手動またはツール経由)
 
-## Summary
+## 要約
 [Extract from feature spec: primary requirement + technical approach from research]
 
-## Technical Context
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+## 技術的コンテキスト
+**言語/バージョン**: [例: Python 3.11, Swift 5.9, Rust 1.75 または NEEDS CLARIFICATION]
+**主要依存関係**: [例: FastAPI, UIKit, LLVM または NEEDS CLARIFICATION]
+**ストレージ**: [該当する場合, 例: PostgreSQL, CoreData, files または N/A]
+**テスト**: [例: pytest, XCTest, cargo test または NEEDS CLARIFICATION]
+**ターゲットプラットフォーム**: [例: Linux server, iOS 15+, WASM または NEEDS CLARIFICATION]
+**プロジェクトタイプ**: [single/web/mobile - ソース構造を決定]
+**パフォーマンス目標**: [ドメイン固有, 例: 1000 req/s, 10k lines/sec, 60 fps または NEEDS CLARIFICATION]
+**制約**: [ドメイン固有, 例: <200ms p95, <100MB memory, offline-capable または NEEDS CLARIFICATION]
+**規模/範囲**: [ドメイン固有, 例: 10k users, 1M LOC, 50 screens または NEEDS CLARIFICATION]
 
-## Constitution Check
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+## 憲法チェック
+*ゲート: フェーズ 0 研究前に合格する必要。フェーズ 1 設計後に再チェック。*
 
-**Simplicity**:
-- Projects: [#] (max 3 - e.g., api, cli, tests)
-- Using framework directly? (no wrapper classes)
-- Single data model? (no DTOs unless serialization differs)
-- Avoiding patterns? (no Repository/UoW without proven need)
+**シンプルさ**:
+- プロジェクト: [#] (最大 3 - 例: api, cli, tests)
+- フレームワークを直接使用? (ラッパークラスなし)
+- 単一データモデル? (シリアライズが異なる場合を除き DTO なし)
+- パターンを避ける? (証明された必要性なしで Repository/UoW なし)
 
-**Architecture**:
-- EVERY feature as library? (no direct app code)
-- Libraries listed: [name + purpose for each]
-- CLI per library: [commands with --help/--version/--format]
-- Library docs: llms.txt format planned?
+**アーキテクチャ**:
+- すべての機能をライブラリとして? (直接アプリコードなし)
+- ライブラリリスト: [各々の名前 + 目的]
+- ライブラリごとの CLI: [ --help/--version/--format 付きコマンド]
+- ライブラリドキュメント: llms.txt 形式を計画?
 
-**Testing (NON-NEGOTIABLE)**:
-- RED-GREEN-Refactor cycle enforced? (test MUST fail first)
-- Git commits show tests before implementation?
-- Order: Contract→Integration→E2E→Unit strictly followed?
-- Real dependencies used? (actual DBs, not mocks)
-- Integration tests for: new libraries, contract changes, shared schemas?
-- FORBIDDEN: Implementation before test, skipping RED phase
+**テスト (交渉不可)**:
+- RED-GREEN-Refactor サイクルを強制? (テストは最初に失敗する必要)
+- Git コミットは実装前にテストを表示?
+- 順序: Contract→Integration→E2E→Unit を厳格に遵守?
+- 実際の依存関係を使用? (実際の DB, モックなし)
+- 統合テスト対象: 新しいライブラリ, 契約変更, 共有スキーマ?
+- 禁止: テスト前に実装, RED フェーズをスキップ
 
-**Observability**:
-- Structured logging included?
-- Frontend logs → backend? (unified stream)
-- Error context sufficient?
+**観測性**:
+- 構造化ログを含める?
+- フロントエンドログ → バックエンド? (統合ストリーム)
+- エラーコンテキストは十分?
 
-**Versioning**:
-- Version number assigned? (MAJOR.MINOR.BUILD)
-- BUILD increments on every change?
-- Breaking changes handled? (parallel tests, migration plan)
+**バージョン管理**:
+- バージョン番号を割り当て? (MAJOR.MINOR.BUILD)
+- すべての変更で BUILD を増分?
+- 破壊的変更を処理? (並列テスト, 移行計画)
 
-## Project Structure
+## プロジェクト構造
 
-### Documentation (this feature)
+### 文書 (この機能)
 ```
 specs/[###-feature]/
-├── plan.md              # This file (/plan command output)
-├── research.md          # Phase 0 output (/plan command)
-├── data-model.md        # Phase 1 output (/plan command)
-├── quickstart.md        # Phase 1 output (/plan command)
-├── contracts/           # Phase 1 output (/plan command)
-└── tasks.md             # Phase 2 output (/tasks command - NOT created by /plan)
+├── plan.md              # このファイル (/plan コマンド出力)
+├── research.md          # フェーズ 0 出力 (/plan コマンド)
+├── data-model.md        # フェーズ 1 出力 (/plan コマンド)
+├── quickstart.md        # フェーズ 1 出力 (/plan コマンド)
+├── contracts/           # フェーズ 1 出力 (/plan コマンド)
+└── tasks.md             # フェーズ 2 出力 (/tasks コマンド - /plan によって作成されない)
 ```
 
-### Source Code (repository root)
+### ソースコード (リポジトリルート)
 ```
-# Option 1: Single project (DEFAULT)
+# オプション 1: 単一プロジェクト (デフォルト)
 src/
 ├── models/
 ├── services/
@@ -102,7 +102,7 @@ tests/
 ├── integration/
 └── unit/
 
-# Option 2: Web application (when "frontend" + "backend" detected)
+# オプション 2: Web アプリケーション ("frontend" + "backend" が検出された場合)
 backend/
 ├── src/
 │   ├── models/
@@ -117,23 +117,23 @@ frontend/
 │   └── services/
 └── tests/
 
-# Option 3: Mobile + API (when "iOS/Android" detected)
+# オプション 3: モバイル + API ("iOS/Android" が検出された場合)
 api/
-└── [same as backend above]
+└── [上記の backend と同じ]
 
-ios/ or android/
-└── [platform-specific structure]
+ios/ または android/
+└── [プラットフォーム固有の構造]
 ```
 
-**Structure Decision**: [DEFAULT to Option 1 unless Technical Context indicates web/mobile app]
+**構造決定**: [DEFAULT to Option 1 unless Technical Context indicates web/mobile app]
 
-## Phase 0: Outline & Research
-1. **Extract unknowns from Technical Context** above:
-   - For each NEEDS CLARIFICATION → research task
-   - For each dependency → best practices task
-   - For each integration → patterns task
+## フェーズ 0: アウトライン & 研究
+1. **上記の技術的コンテキストから不明点を抽出**:
+   - 各 NEEDS CLARIFICATION → 研究タスク
+   - 各依存関係 → ベストプラクティスタスク
+   - 各統合 → パターンタスク
 
-2. **Generate and dispatch research agents**:
+2. **研究エージェントを生成して派遣**:
    ```
    For each unknown in Technical Context:
      Task: "Research {unknown} for {feature context}"
@@ -141,14 +141,14 @@ ios/ or android/
      Task: "Find best practices for {tech} in {domain}"
    ```
 
-3. **Consolidate findings** in `research.md` using format:
-   - Decision: [what was chosen]
-   - Rationale: [why chosen]
-   - Alternatives considered: [what else evaluated]
+3. **発見を統合** `research.md` で以下の形式を使用:
+   - 決定: [選択されたもの]
+   - 根拠: [なぜ選択されたか]
+   - 検討された代替案: [他に評価されたもの]
 
-**Output**: research.md with all NEEDS CLARIFICATION resolved
+**出力**: すべての NEEDS CLARIFICATION が解決された research.md
 
-## Phase 1: Design & Contracts
+## フェーズ 1: 設計 & 契約
 *Prerequisites: research.md complete*
 
 1. **Extract entities from feature spec** → `data-model.md`:
@@ -156,17 +156,17 @@ ios/ or android/
    - Validation rules from requirements
    - State transitions if applicable
 
-2. **Generate API contracts** from functional requirements:
+2. **Generate API contracts from functional requirements**:
    - For each user action → endpoint
    - Use standard REST/GraphQL patterns
    - Output OpenAPI/GraphQL schema to `/contracts/`
 
-3. **Generate contract tests** from contracts:
+3. **Generate contract tests from contracts**:
    - One test file per endpoint
    - Assert request/response schemas
    - Tests must fail (no implementation yet)
 
-4. **Extract test scenarios** from user stories:
+4. **Extract test scenarios from user stories**:
    - Each story → integration test scenario
    - Quickstart test = story validation steps
 
@@ -180,35 +180,35 @@ ios/ or android/
 
 **Output**: data-model.md, /contracts/*, failing tests, quickstart.md, agent-specific file
 
-## Phase 2: Task Planning Approach
-*This section describes what the /tasks command will do - DO NOT execute during /plan*
+## フェーズ 2: タスク計画アプローチ
+*このセクションは /tasks コマンドが何をするかを記述 - /plan 中に実行しない*
 
-**Task Generation Strategy**:
-- Load `/templates/tasks-template.md` as base
-- Generate tasks from Phase 1 design docs (contracts, data model, quickstart)
-- Each contract → contract test task [P]
-- Each entity → model creation task [P] 
-- Each user story → integration test task
-- Implementation tasks to make tests pass
+**タスク生成戦略**:
+- `/templates/tasks-template.md` をベースとしてロード
+- フェーズ 1 設計ドキュメント (contracts, data model, quickstart) からタスクを生成
+- 各契約 → 契約テストタスク [P]
+- 各エンティティ → モデル作成タスク [P]
+- 各ユーザーストーリー → 統合テストタスク
+- テストを合格させるための実装タスク
 
-**Ordering Strategy**:
-- TDD order: Tests before implementation 
-- Dependency order: Models before services before UI
-- Mark [P] for parallel execution (independent files)
+**順序付け戦略**:
+- TDD 順序: 実装前にテスト
+- 依存関係順序: UI よりサービスよりモデル
+- 並列実行のために [P] をマーク (独立ファイル)
 
-**Estimated Output**: 25-30 numbered, ordered tasks in tasks.md
+**推定出力**: tasks.md の 25-30 の番号付き順序付きタスク
 
-**IMPORTANT**: This phase is executed by the /tasks command, NOT by /plan
+**重要**: このフェーズは /tasks コマンドによって実行, /plan によってではない
 
-## Phase 3+: Future Implementation
-*These phases are beyond the scope of the /plan command*
+## フェーズ 3+: 将来の実装
+*これらのフェーズは /plan コマンドのスコープを超える*
 
-**Phase 3**: Task execution (/tasks command creates tasks.md)  
-**Phase 4**: Implementation (execute tasks.md following constitutional principles)  
+**Phase 3**: Task execution (/tasks command creates tasks.md)
+**Phase 4**: Implementation (execute tasks.md following constitutional principles)
 **Phase 5**: Validation (run tests, execute quickstart.md, performance validation)
 
-## Complexity Tracking
-*Fill ONLY if Constitution Check has violations that must be justified*
+## 複雑さ追跡
+*憲法チェックに正当化が必要な違反がある場合のみ記入*
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |
 |-----------|------------|-------------------------------------|
@@ -216,8 +216,8 @@ ios/ or android/
 | [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
 
 
-## Progress Tracking
-*This checklist is updated during execution flow*
+## 進捗追跡
+*このチェックリストは実行フロー中に更新*
 
 **Phase Status**:
 - [ ] Phase 0: Research complete (/plan command)

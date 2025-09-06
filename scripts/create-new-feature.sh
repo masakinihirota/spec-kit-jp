@@ -1,13 +1,13 @@
 #!/bin/bash
-# Create a new feature with branch, directory structure, and template
-# Usage: ./create-new-feature.sh "feature description"
-#        ./create-new-feature.sh --json "feature description"
+# 新しい機能にブランチ、ディレクトリ構造、テンプレートを作成
+# 使用法: ./create-new-feature.sh "機能説明"
+#        ./create-new-feature.sh --json "機能説明"
 
 set -e
 
 JSON_MODE=false
 
-# Collect non-flag args
+# フラグ以外の引数を収集
 ARGS=()
 for arg in "$@"; do
     case "$arg" in
@@ -27,14 +27,14 @@ if [ -z "$FEATURE_DESCRIPTION" ]; then
         exit 1
 fi
 
-# Get repository root
+# リポジトリルートを取得
 REPO_ROOT=$(git rev-parse --show-toplevel)
 SPECS_DIR="$REPO_ROOT/specs"
 
-# Create specs directory if it doesn't exist
+# specs ディレクトリが存在しない場合作成
 mkdir -p "$SPECS_DIR"
 
-# Find the highest numbered feature directory
+# 最も番号の高い機能ディレクトリを見つける
 HIGHEST=0
 if [ -d "$SPECS_DIR" ]; then
     for dir in "$SPECS_DIR"/*; do
@@ -49,11 +49,11 @@ if [ -d "$SPECS_DIR" ]; then
     done
 fi
 
-# Generate next feature number with zero padding
+# ゼロパディングで次の機能番号を生成
 NEXT=$((HIGHEST + 1))
 FEATURE_NUM=$(printf "%03d" "$NEXT")
 
-# Create branch name from description
+# 説明からブランチ名を作成
 BRANCH_NAME=$(echo "$FEATURE_DESCRIPTION" | \
     tr '[:upper:]' '[:lower:]' | \
     sed 's/[^a-z0-9]/-/g' | \
@@ -61,20 +61,20 @@ BRANCH_NAME=$(echo "$FEATURE_DESCRIPTION" | \
     sed 's/^-//' | \
     sed 's/-$//')
 
-# Extract 2-3 meaningful words
+# 2-3 つの意味のある単語を抽出
 WORDS=$(echo "$BRANCH_NAME" | tr '-' '\n' | grep -v '^$' | head -3 | tr '\n' '-' | sed 's/-$//')
 
-# Final branch name
+# 最終ブランチ名
 BRANCH_NAME="${FEATURE_NUM}-${WORDS}"
 
-# Create and switch to new branch
+# 新しいブランチを作成して切り替え
 git checkout -b "$BRANCH_NAME"
 
-# Create feature directory
+# 機能ディレクトリを作成
 FEATURE_DIR="$SPECS_DIR/$BRANCH_NAME"
 mkdir -p "$FEATURE_DIR"
 
-# Copy template if it exists
+# テンプレートが存在する場合、コピー
 TEMPLATE="$REPO_ROOT/templates/spec-template.md"
 SPEC_FILE="$FEATURE_DIR/spec.md"
 

@@ -1,6 +1,6 @@
 #!/bin/bash
-# Get paths for current feature branch without creating anything
-# Used by commands that need to find existing feature files
+# 既存の機能ファイルを見つけるための現在の機能ブランチのパスを取得
+# 既存の機能ファイルを必要とするコマンドで使用
 
 set -e
 
@@ -8,13 +8,13 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
-# Get all paths
+# すべてのパスを取得
 eval $(get_feature_paths)
 
-# Check if on feature branch
+# 機能ブランチ上かどうかをチェック
 check_feature_branch "$CURRENT_BRANCH" || exit 1
 
-# Output paths (don't create anything)
+# パスを出力（何も作成しない）
 echo "REPO_ROOT: $REPO_ROOT"
 echo "BRANCH: $CURRENT_BRANCH"
 echo "FEATURE_DIR: $FEATURE_DIR"

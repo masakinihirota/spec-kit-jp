@@ -1,7 +1,7 @@
 #!/bin/bash
-# Setup implementation plan structure for current branch
-# Returns paths needed for implementation plan generation
-# Usage: ./setup-plan.sh [--json]
+# 現在のブランチの実装計画構造を設定
+# 実装計画生成に必要なパスを返す
+# 使用法: ./setup-plan.sh [--json]
 
 set -e
 
@@ -13,20 +13,20 @@ for arg in "$@"; do
     esac
 done
 
-# Source common functions
+# 共通関数をソース
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
-# Get all paths
+# すべてのパスを取得
 eval $(get_feature_paths)
 
-# Check if on feature branch
+# 機能ブランチ上かどうかをチェック
 check_feature_branch "$CURRENT_BRANCH" || exit 1
 
-# Create specs directory if it doesn't exist
+# specs ディレクトリが存在しない場合作成
 mkdir -p "$FEATURE_DIR"
 
-# Copy plan template if it exists
+# 計画テンプレートが存在する場合、コピー
 TEMPLATE="$REPO_ROOT/templates/plan-template.md"
 if [ -f "$TEMPLATE" ]; then
     cp "$TEMPLATE" "$IMPL_PLAN"
@@ -36,7 +36,7 @@ if $JSON_MODE; then
     printf '{"FEATURE_SPEC":"%s","IMPL_PLAN":"%s","SPECS_DIR":"%s","BRANCH":"%s"}\n' \
         "$FEATURE_SPEC" "$IMPL_PLAN" "$FEATURE_DIR" "$CURRENT_BRANCH"
 else
-    # Output all paths for LLM use
+    # LLM 使用のためのすべてのパスを出力
     echo "FEATURE_SPEC: $FEATURE_SPEC"
     echo "IMPL_PLAN: $IMPL_PLAN"
     echo "SPECS_DIR: $FEATURE_DIR"
