@@ -1,17 +1,17 @@
 #!/bin/bash
-# Common functions and variables for all scripts
+# すべてのスクリプトの共通関数と変数
 
-# Get repository root
+# リポジトリルートを取得
 get_repo_root() {
     git rev-parse --show-toplevel
 }
 
-# Get current branch
+# 現在のブランチを取得
 get_current_branch() {
     git rev-parse --abbrev-ref HEAD
 }
 
-# Check if current branch is a feature branch
+# 現在のブランチが機能ブランチかどうかをチェック
 # Returns 0 if valid, 1 if not
 check_feature_branch() {
     local branch="$1"
@@ -23,21 +23,21 @@ check_feature_branch() {
     return 0
 }
 
-# Get feature directory path
+# 機能ディレクトリパスを取得
 get_feature_dir() {
     local repo_root="$1"
     local branch="$2"
     echo "$repo_root/specs/$branch"
 }
 
-# Get all standard paths for a feature
+# 機能のすべての標準パスを取得
 # Usage: eval $(get_feature_paths)
 # Sets: REPO_ROOT, CURRENT_BRANCH, FEATURE_DIR, FEATURE_SPEC, IMPL_PLAN, TASKS
 get_feature_paths() {
     local repo_root=$(get_repo_root)
     local current_branch=$(get_current_branch)
     local feature_dir=$(get_feature_dir "$repo_root" "$current_branch")
-    
+
     echo "REPO_ROOT='$repo_root'"
     echo "CURRENT_BRANCH='$current_branch'"
     echo "FEATURE_DIR='$feature_dir'"
@@ -50,7 +50,7 @@ get_feature_paths() {
     echo "CONTRACTS_DIR='$feature_dir/contracts'"
 }
 
-# Check if a file exists and report
+# ファイルが存在するかどうかをチェックして報告
 check_file() {
     local file="$1"
     local description="$2"
@@ -63,7 +63,7 @@ check_file() {
     fi
 }
 
-# Check if a directory exists and has files
+# ディレクトリが存在し、ファイルがあるかどうかをチェック
 check_dir() {
     local dir="$1"
     local description="$2"
