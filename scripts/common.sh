@@ -16,8 +16,8 @@ get_current_branch() {
 check_feature_branch() {
     local branch="$1"
     if [[ ! "$branch" =~ ^[0-9]{3}- ]]; then
-        echo "ERROR: Not on a feature branch. Current branch: $branch"
-        echo "Feature branches should be named like: 001-feature-name"
+        echo "エラー: 現在のブランチは機能ブランチではありません。現在のブランチ: $branch"
+        echo "機能ブランチは次のように命名してください: 001-feature-name"
         return 1
     fi
     return 0
